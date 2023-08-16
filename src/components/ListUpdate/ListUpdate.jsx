@@ -1,27 +1,38 @@
 import css from './ListUpdate.module.css';
 import React, { useMemo } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { remove } from '../../redux/myContactsSlice/myContactsSlice';
-import { getContacts } from '../../redux/myContactsSlice/myContactsSlice';
+// import { remove } from '../../redux/myContactsSlice/myContactsSlice';
+// import { getContacts } from '../../redux/myContactsSlice/myContactsSlice';
 import { getFilter } from '../../redux/myFilterSlice/myFilterSlice';
 import PropTypes from 'prop-types';
+import { fetchContactsThunk, deleteContactThunk } from 'redux/AsyncThunk/AsyncThunk';
 
 const ListUpdate = () => {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter)
-   
-  const normalizedFilter = filter.toLowerCase();
-  
-  const filteredContacts = useMemo(() => {
-    if (contacts) { 
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter))
-  }
-},[normalizedFilter, contacts])
+
     const dispatch = useDispatch();
+ const { items, isLoading, error } = useSelector(state => state.contacts);
+       useEffect(() => {
+        dispatch(fetchContactsThunk());
+    }, [dispatch, items]);
+
+    
+    //   const contacts = useSelector(getContacts);
+      const filter = useSelector(getFilter)
+   
+      const normalizedFilter = filter.toLowerCase();
+  
+    const filteredContacts = useMemo(() => {
+         if (items.length > 0) 
+          return items.filter(contact =>
+          contact.name.toLowerCase().includes(normalizedFilter))
+          },[normalizedFilter, items])
+   
     return (
-        <ul className={css.list}>
-            {filteredContacts.map(({ name, number, id }) => {
+        <div>
+            {isLoading && <h1>Loading...</h1>}
+            <ul className={css.list}>
+            {filteredContacts && filteredContacts.length > 0 && filteredContacts.map(({ name, number, id }) => {
                 return (
                     <li key={id} className={css.item}>
                         <p className={css.text}>
@@ -29,13 +40,17 @@ const ListUpdate = () => {
                         </p>
                         <button
                             type="button"
-                            onClick={() => dispatch(remove(id))}
+                            onClick={() => dispatch(deleteContactThunk(id))}
                             className={css.listBtn}                            >
                             Delete</button>
                     </li>
                 )
             })}
-        </ul>
+            </ul>
+            {error && <h1>Somethin went WRONG</h1>}
+        </div>
+
+       
     )
 };
 

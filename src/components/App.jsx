@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import Form from './Form'
+import Form from './Form';
+
 import ListUpdate from './ListUpdate/ListUpdate';
 import Filter from './FilterName/FilterName';
 
 
 function App() {
-     
     return (
       <div>
         <h1>Phonebook</h1>

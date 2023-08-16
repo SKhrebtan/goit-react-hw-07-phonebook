@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { add, getContacts } from '../../redux/myContactsSlice/myContactsSlice';
+import { addContactThunk } from 'redux/AsyncThunk/AsyncThunk';
+// import { add, getContacts } from '../../redux/myContactsSlice/myContactsSlice';
 import css from './Form.module.css'
 import { nanoid } from 'nanoid';
 
-
-
 function Form() {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts)
-  console.log(contacts)
-  const [name, setName] = useState('');
+  const contacts = useSelector(state=>state.contacts.items)
+   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   
     const nameFormId = nanoid();
@@ -37,10 +35,11 @@ function Form() {
       number,
       id: nanoid(),
       }
-      if (contacts.find(contact => contact.name.includes(newContact.name))) {
+  if (contacts.find(contact => contact.name.includes(newContact.name))) {
         return alert('ay, такий контакт вже існує')
       }
-      dispatch(add(newContact))
+      dispatch(addContactThunk(newContact))
+        
           reset();
     }
     
