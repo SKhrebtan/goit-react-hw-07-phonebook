@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContactsThunk,addContactThunk,deleteContactThunk } from 'redux/AsyncThunk/AsyncThunk';
+import { fetchContactsThunk,addContactThunk,deleteContactThunk } from './AsyncThunk';
 
  export const myContactsSlice = createSlice({
     name: 'contacts',
@@ -47,13 +47,3 @@ import { fetchContactsThunk,addContactThunk,deleteContactThunk } from 'redux/Asy
        },
   },
 })
-
-// export const persistedReducer = persistReducer(persistConfig, myContactsSlice.reducer)
-
-// export const { add, remove } = myContactsSlice.actions;
-
-// export const getContacts = state => state.contacts.items;
-// const persistConfig = {
-//   key: 'contacts',
-//   storage,
-// }

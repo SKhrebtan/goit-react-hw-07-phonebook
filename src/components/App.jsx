@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import Form from './Form';
-
-import ListUpdate from './ListUpdate/ListUpdate';
-import Filter from './FilterName/FilterName';
-
+import ListUpdate from './ListUpdate';
+import Filter from './FilterName';
 
 function App() {
     return (
@@ -23,9 +21,3 @@ App.propTypes = {
 }
 
 export default App;
-
-  // <h1>Phonebook</h1>
-  //       <Form onSubmit={addUser} />
-  //       <h2>Contacts</h2>
-  //       <Filter onChange={changeFilter} value={filter} />
-  //       <ListUpdate options={filteredContacts} onDeleteContacts={deleteContact} />

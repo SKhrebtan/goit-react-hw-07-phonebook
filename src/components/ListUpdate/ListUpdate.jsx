@@ -1,28 +1,21 @@
-import css from './ListUpdate.module.css';
-import React, { useMemo } from 'react';
-import { useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { remove } from '../../redux/myContactsSlice/myContactsSlice';
-// import { getContacts } from '../../redux/myContactsSlice/myContactsSlice';
-import { getFilter } from '../../redux/myFilterSlice/myFilterSlice';
+import { selectors, API } from 'redux/contacts';
+import css from './ListUpdate.module.css';
 import PropTypes from 'prop-types';
-import { fetchContactsThunk, deleteContactThunk } from 'redux/AsyncThunk/AsyncThunk';
 
 const ListUpdate = () => {
 
     const dispatch = useDispatch();
- const { items, isLoading, error } = useSelector(state => state.contacts);
+    const { items, isLoading, error } = useSelector(selectors.getContacts);
        useEffect(() => {
-        dispatch(fetchContactsThunk());
+        dispatch(API.fetchContactsThunk());
     }, [dispatch]);
-
-    
-    //   const contacts = useSelector(getContacts);
-      const filter = useSelector(getFilter)
-   
+  
+      const filter = useSelector(selectors.getFilter)
       const normalizedFilter = filter.toLowerCase();
   
-    const filteredContacts = useMemo(() => {
+         const filteredContacts = useMemo(() => {
          if (items.length > 0) 
           return items.filter(contact =>
           contact.name.toLowerCase().includes(normalizedFilter))
@@ -40,7 +33,7 @@ const ListUpdate = () => {
                         </p>
                         <button
                             type="button"
-                            onClick={() => dispatch(deleteContactThunk(id))}
+                            onClick={() => dispatch(API.deleteContactThunk(id))}
                             className={css.listBtn}                            >
                             Delete</button>
                     </li>
