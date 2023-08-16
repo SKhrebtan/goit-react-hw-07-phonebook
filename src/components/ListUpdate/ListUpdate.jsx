@@ -14,7 +14,7 @@ const ListUpdate = () => {
  const { items, isLoading, error } = useSelector(state => state.contacts);
        useEffect(() => {
         dispatch(fetchContactsThunk());
-    }, [dispatch, items]);
+    }, [dispatch]);
 
     
     //   const contacts = useSelector(getContacts);

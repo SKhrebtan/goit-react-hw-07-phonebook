@@ -27,7 +27,7 @@ import { fetchContactsThunk,addContactThunk,deleteContactThunk } from 'redux/Asy
     [addContactThunk.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
-      state.items = action.payload;
+      state.items = [...state.items, action.payload];
     },
     [addContactThunk.rejected](state, action) {
       state.isLoading = false;
@@ -39,7 +39,7 @@ import { fetchContactsThunk,addContactThunk,deleteContactThunk } from 'redux/Asy
     [deleteContactThunk.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
-      state.items = action.payload;
+      state.items = state.items.filter(item => item.id !== action.payload.id);
     },
     [deleteContactThunk.rejected](state, action) {
       state.isLoading = false;
